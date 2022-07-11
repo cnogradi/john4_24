@@ -2200,7 +2200,7 @@ input, select, textarea {
 		background-attachment: fixed;
 		color: #fff;
 		text-align: center;
-		padding: 7.5em 0 2em 0;
+		padding: 3.5em 0 2em 0;
 		cursor: default;
 	}
 
@@ -2211,17 +2211,6 @@ input, select, textarea {
 		transition: opacity 0.325s ease-in-out;
 		position: relative;
 		margin-top: 3.5rem;
-	}
-
-	#header > *:before {
-		content: '';
-		display: block;
-		position: absolute;
-		top: calc(-3.5rem - 1px);
-		left: calc(50% - 1px);
-		width: 1px;
-		height: calc(3.5rem + 1px);
-		background: #ffffff;
 	}
 
 		#header .content .inner {
@@ -2236,6 +2225,8 @@ input, select, textarea {
 			padding: 3rem 2rem;
 			max-height: 40rem;
 			overflow: hidden;
+			background: rgb(0, 0, 0);
+			opacity: 0.65;
 		}
 		
 
@@ -2309,8 +2300,18 @@ input, select, textarea {
 			}
 
 		#header footer {
-			margin: 1em 0 0 0;
+			margin: 4em 0 0 0;
+		}		  
+
+		.meeting {
+			background-image: url("../../images/alabama.png");
+			opacity: 0.65;
+			background-repeat:no-repeat;
+			background-size: 240px 368px;
+			background-position: center;
+			padding-right: 4em;
 		}
+
 
 	body.homepage #header {
 		height: 100vh;
