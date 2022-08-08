@@ -22,8 +22,11 @@
 		$header = $('#header'),
 		$footer = $('#footer'),
 		$main = $('#hiden_articles'),
+		$main_2 = $('#hiden_articles_2'),
 		$visible = $('#visible_articles'),
 		$main_articles = $main.children('article');
+		$visible_2 = $('#reel'),
+		$carosel_articles = $main_2.children('article');
 
 	// Breakpoints.
 		breakpoints({
@@ -224,10 +227,9 @@
 		var	delay = 325,
 			locked = false;
 
-		// Methods.
-			$main._show = function(id, initial) {
+		show_func = function(id, initial, articles, main) {
 
-				var $article = $main_articles.filter('#' + id);
+		var $article = articles.filter('#' + id);
 
 				// No such article? Bail.
 					if ($article.length == 0)
@@ -245,15 +247,16 @@
 								$body.addClass('is-article-visible');
 
 							// Deactivate all articles (just in case one's already active).
-								$main_articles.removeClass('active');
+								articles.removeClass('active');
 
 							// Hide header, footer.
 								$header.hide();
 								$footer.hide();
 								$visible.hide();
+								$visible_2.hide();
 
 							// Show main, article.
-								$main.show();
+								main.show();
 								$article.show();
 
 							// Activate article.
@@ -297,7 +300,7 @@
 										$article.addClass('active');
 
 										// Window stuff.
-										$main.scrollTop();
+										main.scrollTop();
 										//	$window
 										//		.scrollTop(0)
 										//		.triggerHandler('resize.flexbox-fix');
@@ -327,10 +330,11 @@
 									$header.hide();
 									$footer.hide();
 									$visible.hide();
+									$visible_2.hide();
 
 
 								// Show main, article.
-									$main.show();
+									main.show();
 									$article.show();
 
 								// Activate article.
@@ -339,7 +343,7 @@
 										$article.addClass('active');
 
 										// Window stuff.
-										$main.scrollTop();
+										main.scrollTop();
 											//$window
 											//	.scrollTop(720)
 											//	.triggerHandler('resize.flexbox-fix');
@@ -354,12 +358,20 @@
 							}, delay);
 
 					}
+					
+				};
+		// Methods.
+			$main._show = function(id, initial) {
+				show_func(id, initial, $main_articles, $main);
+			}
+		
+			$main_2._show = function(id, initial) {
+				show_func(id, initial, $carosel_articles, $main_2);
+			}
 
-			};
+			hide_func = function(addState, articles, main) {
 
-			$main._hide = function(addState) {
-
-				var $article = $main_articles.filter('.active');
+				var $article = articles.filter('.active');
 
 				// Article not visible? Bail.
 					if (!$body.hasClass('is-article-visible'))
@@ -383,12 +395,13 @@
 
 							// Hide article, main.
 								$article.hide();
-								$main.hide();
+								main.hide();
 
 							// Show footer, header.
 								$footer.show();
 								$header.show();
 								$visible.show();
+								$visible_2.show();
 
 							// Unmark as visible.
 								$body.removeClass('is-article-visible');
@@ -400,7 +413,7 @@
 								$body.removeClass('is-switching');
 
 							// Window stuff.
-							$main.scrollTop();
+							main.scrollTop();
 								//$window
 								//	.scrollTop(720)
 							//		.triggerHandler('resize.flexbox-fix');
@@ -420,12 +433,13 @@
 
 						// Hide article, main.
 							$article.hide();
-							$main.hide();
+							main.hide();
 
 						// Show footer, header.
 							$footer.show();
 							$header.show();
 							$visible.show();
+							$visible_2.show();
 
 						// Unmark as visible.
 							setTimeout(function() {
@@ -433,7 +447,7 @@
 								$body.removeClass('is-article-visible');
 
 								// Window stuff.
-								$main.scrollTop();
+								main.scrollTop();
 									//$window
 								//		.scrollTop(800)
 								//		.triggerHandler('resize.flexbox-fix');
@@ -450,6 +464,15 @@
 
 			};
 
+			
+			$main._hide = function(addState) {
+				hide_func(addState, $main_articles, $main)
+			}
+		
+			$main_2._hide = function(addState) {
+				hide_func(addState, $carosel_articles, $main_2)
+			}
+
 		// Articles.
 			$main_articles.each(function() {
 
@@ -459,7 +482,7 @@
 					$('<div class="close">Close</div>')
 						.appendTo($this)
 						.on('click', function() {
-							location.hash = '';
+							location.hash = '#visible_articles';
 						});
 
 				// Prevent clicks from inside article from bubbling.
@@ -469,12 +492,32 @@
 
 			});
 
+					// Articles.
+			$carosel_articles.each(function() {
+
+						var $this = $(this);
+		
+						// Close.
+							$('<div class="close">Close</div>')
+								.appendTo($this)
+								.on('click', function() {
+									location.hash = '#reel';
+								});
+		
+						// Prevent clicks from inside article from bubbling.
+							$this.on('click', function(event) {
+								event.stopPropagation();
+							});
+		
+					});
+
 		// Events.
 			$body.on('click', function(event) {
 
 				// Article visible? Hide.
 					if ($body.hasClass('is-article-visible'))
 						$main._hide(true);
+						$main_2._hide(true);
 
 			});
 
@@ -487,6 +530,7 @@
 						// Article visible? Hide.
 							if ($body.hasClass('is-article-visible'))
 								$main._hide(true);
+								$main_2._hide(true);
 
 						break;
 
@@ -501,7 +545,9 @@
 
 				// Empty hash?
 					if (location.hash == ''
-					||	location.hash == '#') {
+					||	location.hash == '#'
+					|| location.hash == '#visible_articles'
+					|| location.hash == "#reel") {
 
 						// Prevent default.
 							event.preventDefault();
@@ -509,6 +555,7 @@
 
 						// Hide.
 							$main._hide();
+							$main_2._hide();
 
 					}
 
@@ -523,6 +570,17 @@
 							$main._show(location.hash.substr(1));
 
 					}
+					else if ($carosel_articles.filter(location.hash).length > 0) {
+
+						// Prevent default.
+							event.preventDefault();
+							event.stopPropagation();
+
+						// Show article.
+							$main_2._show(location.hash.substr(1));
+
+					}
+					
 
 			});
 
@@ -553,13 +611,21 @@
 
 			// Hide main, articles.
 				$main.hide();
+				$main_2.hide();
 				$main_articles.hide();
+				$carosel_articles.hide();
+				
 
 			// Initial article.
 				if (location.hash != ''
 				&&	location.hash != '#')
 					$window.on('load', function() {
-						$main._show(location.hash.substr(1), true);
+						if ($main_articles.filter(location.hash).length > 0) {
+							$main._show(location.hash.substr(1), true);
+						}
+						else if ($carosel_articles.filter(location.hash).length > 0) {
+							$main_2._show(location.hash.substr(1), true);
+						}
 					});
 					
 })(jQuery);
