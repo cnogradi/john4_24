@@ -2687,20 +2687,28 @@ input, select, textarea {
 						opacity: 0;
 						overflow: scroll;
 						height: 30rem;
+						text-align: left;
 					}
 				
 					#hiden_articles_2 strong, b {
 						font-weight: 400;
-						color: #ffffff;
+						color: hsl(0, 0%, 100%);
 					}
 					#hiden_articles_2 h3 {
-						color: #f4f8f4;
+						color: #ffffff;
+					}
+					#hiden_articles_2 h4 {
+						color: #ffffff;
+						text-align: center;
 					}
 					#hiden_articles_2 hr {
 						top: .01em;
 						margin-bottom: .1em;
 						padding: 0px;
 						margin: 0px; 
+					}
+					#hiden_articles_2 a {
+						color: #e5dffa;
 					}
 						#hiden_articles_2 article.active {
 							-moz-transform: translateY(0);
