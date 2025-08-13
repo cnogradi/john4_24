@@ -64,6 +64,7 @@
 	// Distinctives.
 		var $distinctives = $('.distinctives a');
 		var $catechismContent = $('#catechism-content');
+		var catechismData = JSON.parse($('#catechism_data').html());
 
 		$distinctives.on('click', function(event) {
 			event.preventDefault();
@@ -72,10 +73,23 @@
 			var distinctiveId = $(this).attr('id');
 
 			if (distinctiveId === 'regulative-link') {
-				$catechismContent.load('catechism.html', function() {
-					// Wrap the loaded content in an article tag
-					$catechismContent.html('<article>' + $catechismContent.html() + '</article>');
+				var html = '<article>';
+				html += '<header><h3><a href="#regulative">' + catechismData.title + '</a></h3></header>';
+
+				$.each(catechismData.questions, function(i, item) {
+					html += '<p><h4>' + item.question + '</h4>';
+					$.each(item.verses, function(j, verse) {
+						html += '<a href="' + verse.link + '">' + verse.reference + '</a>: ';
+						html += verse.text;
+						if (j < item.verses.length - 1) {
+							html += '<br>';
+						}
+					});
+					html += '</p>';
 				});
+
+				html += '</article>';
+				$catechismContent.html(html);
 			} else {
 				$catechismContent.html('<p>Information for this distinctive is not yet available.</p>');
 			}
