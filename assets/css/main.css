@@ -3487,3 +3487,42 @@ input, select, textarea {
 					}
 
 	}
+
+/* Distinctives */
+
+	.distinctives {
+		list-style: none;
+		padding-left: 0;
+	}
+
+		.distinctives li {
+			padding-left: 0;
+		}
+
+		.distinctives a {
+			display: block;
+			padding: 0.5em;
+			border-bottom: solid 1px rgba(128, 128, 128, 0.15);
+			cursor: pointer;
+		}
+
+		.distinctives a:hover {
+			background-color: rgba(223, 115, 102, 0.1);
+		}
+
+	#catechism-content {
+		padding: 1em;
+		border: solid 1px rgba(128, 128, 128, 0.15);
+		border-radius: 0.5em;
+		background-color: #fafafa;
+		height: 500px;
+		overflow-y: auto;
+	}
+
+		#catechism-content h3, #catechism-content h4 {
+			color: #483949;
+		}
+
+		#catechism-content p {
+			margin-bottom: 1em;
+		}
