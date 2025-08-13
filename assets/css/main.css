@@ -138,6 +138,11 @@ input, select, textarea {
 		margin: 0 0 0.25em 0;
 	}
 
+	.wrapper.style1.church-of-christ-section strong,
+	.wrapper.style1.church-of-christ-section b {
+		color: #fff;
+	}
+
 	strong, b {
 		font-weight: 400;
 		color: #483949;
