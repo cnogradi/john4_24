@@ -3554,3 +3554,31 @@ input, select, textarea {
 		#catechism-content strong {
 			color: #fff;
 		}
+
+/* Church of Christ Section */
+
+	.wrapper.style1.church-of-christ-section {
+		background-color: #3b353c;
+		color: rgba(255, 255, 255, 0.75);
+		padding: 4em 0 4em 0;
+	}
+
+		.wrapper.style1.church-of-christ-section h2,
+		.wrapper.style1.church-of-christ-section h3,
+		.wrapper.style1.church-of-christ-section p {
+			color: #fff;
+		}
+
+		.wrapper.style1.church-of-christ-section a {
+			color: rgba(255, 255, 255, 0.75);
+			border-bottom-color: rgba(255, 255, 255, 0.25);
+		}
+
+		.wrapper.style1.church-of-christ-section a:hover {
+			color: #fff;
+			border-bottom-color: transparent;
+		}
+
+		.wrapper.style1.church-of-christ-section header {
+			margin-bottom: 2em;
+		}
