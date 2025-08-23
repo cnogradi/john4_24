@@ -627,10 +627,11 @@
 						}
 					});
 	// Distinctives.
-		var $distinctives = $('.distinctives a');
-		var $catechismContent = $('#catechism-content');
-		var catechismData = JSON.parse($('#catechism_data').html());
-		var currentOpen = null;
+	var $distinctives = $('.distinctives a');
+	var $catechismContent = $('#catechism-content');
+	var catechismData = JSON.parse($('#catechism_data').html());
+	var baptistEcclesiologyData = JSON.parse($('#baptist_ecclesiology_data').html());
+	var currentOpen = null;
 
 
 		$distinctives.on('click', function(event) {
@@ -656,6 +657,48 @@
 				// html += '<h3>' + catechismData.title + '</h3>';
 				
 				$.each(catechismData.questions, function(i, item) {
+					html += '<div class="question-box" data-question="' + i + '">';
+					html += '<div class="question-header">' + item.question + '</div>';
+					html += '<div class="question-content">';
+					$.each(item.verses, function(j, verse) {
+						html += '<div class="verse">';
+						html += '<a href="' + verse.link + '" target="_blank">' + verse.reference + '</a>: ';
+						html += verse.text;
+						html += '</div>';
+					});
+					html += '</div>';
+					html += '</div>';
+				});
+
+				html += '</div>';
+				
+				$catechismContent.html(html).slideDown(300);
+				currentOpen = distinctiveId;
+
+				// Add click handlers for question boxes
+				$('.question-box').on('click', function() {
+					var $content = $(this).find('.question-content');
+					var $header = $(this).find('.question-header');
+					var $thisBox = $(this);
+					
+					if ($content.hasClass('open')) {
+						$content.removeClass('open').slideUp(300);
+						$header.removeClass('expanded');
+					} else {
+						// Close other open questions
+						$('.question-content.open').removeClass('open').slideUp(300);
+						$('.question-header.expanded').removeClass('expanded');
+						$content.addClass('open').slideDown(300);
+						$header.addClass('expanded');
+					}
+				});
+
+			} else if (distinctiveId === 'baptist-ecclesiology-link') {
+				var html = '<div class="distinctive-section">';
+				// Remove the title heading as requested
+				// html += '<h3>' + baptistEcclesiologyData.title + '</h3>';
+				
+				$.each(baptistEcclesiologyData.questions, function(i, item) {
 					html += '<div class="question-box" data-question="' + i + '">';
 					html += '<div class="question-header">' + item.question + '</div>';
 					html += '<div class="question-content">';
