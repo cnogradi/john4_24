@@ -631,6 +631,7 @@
 	var $catechismContent = $('#catechism-content');
 	var catechismData = JSON.parse($('#catechism_data').html());
 	var baptistEcclesiologyData = JSON.parse($('#baptist_ecclesiology_data').html());
+	var confessionalData = JSON.parse($('#confessional_data').html());
 	var currentOpen = null;
 
 
@@ -735,6 +736,38 @@
 					}
 				});
 
+			} else if (distinctiveId === 'confessional-link') {
+				var confessionalData = JSON.parse($('#confessional_data').html());
+				var html = '<div class="distinctive-section">';
+				
+				$.each(confessionalData.confessions, function(i, confession) {
+					html += '<div class="question-box">';
+					html += '<div class="question-header">' + confession.title + '</div>';
+					html += '<div class="question-content">' + confession.content + '</div>';
+					html += '</div>';
+				});
+				
+				html += '</div>';
+				
+				$catechismContent.html(html).slideDown(300);
+				currentOpen = distinctiveId;
+
+				// Add click handlers for confession boxes
+				$('.question-box').on('click', function() {
+					var $content = $(this).find('.question-content');
+					var $header = $(this).find('.question-header');
+					
+					if ($content.hasClass('open')) {
+						$content.removeClass('open').slideUp(300);
+						$header.removeClass('expanded');
+					} else {
+						// Close other open questions
+						$('.question-content.open').removeClass('open').slideUp(300);
+						$('.question-header.expanded').removeClass('expanded');
+						$content.addClass('open').slideDown(300);
+						$header.addClass('expanded');
+					}
+				});
 			} else {
 				var html = '<div class="distinctive-section">';
 				// Remove the title heading as requested
