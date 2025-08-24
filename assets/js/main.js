@@ -737,25 +737,34 @@
 				});
 
 			} else if (distinctiveId === 'confessional-link') {
-				var confessionalData = JSON.parse($('#confessional_data').html());
 				var html = '<div class="distinctive-section">';
+				// Remove the title heading as requested
+				// html += '<h3>' + confessionalData.title + '</h3>';
 				
-				$.each(confessionalData.confessions, function(i, confession) {
-					html += '<div class="question-box">';
-					html += '<div class="question-header">' + confession.title + '</div>';
-					html += '<div class="question-content">' + confession.content + '</div>';
+				$.each(confessionalData.questions, function(i, item) {
+					html += '<div class="question-box" data-question="' + i + '">';
+					html += '<div class="question-header">' + item.question + '</div>';
+					html += '<div class="question-content">';
+					$.each(item.verses, function(j, verse) {
+						html += '<div class="verse">';
+						html += '<a href="' + verse.link + '" target="_blank">' + verse.reference + '</a>: ';
+						html += verse.text;
+						html += '</div>';
+					});
+					html += '</div>';
 					html += '</div>';
 				});
-				
+
 				html += '</div>';
 				
 				$catechismContent.html(html).slideDown(300);
 				currentOpen = distinctiveId;
 
-				// Add click handlers for confession boxes
+				// Add click handlers for question boxes
 				$('.question-box').on('click', function() {
 					var $content = $(this).find('.question-content');
 					var $header = $(this).find('.question-header');
+					var $thisBox = $(this);
 					
 					if ($content.hasClass('open')) {
 						$content.removeClass('open').slideUp(300);
