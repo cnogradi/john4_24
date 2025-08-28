@@ -676,8 +676,11 @@
 				$catechismContent.html(html).slideDown(300);
 				currentOpen = distinctiveId;
 
-				// Add click handlers for question boxes
-				$('.question-box').on('click', function() {
+				// Add click handlers for question boxes with mobile support
+				$('.question-box').on('click touchstart', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					
 					var $content = $(this).find('.question-content');
 					var $header = $(this).find('.question-header');
 					var $thisBox = $(this);
@@ -691,6 +694,26 @@
 						$('.question-header.expanded').removeClass('expanded');
 						$content.addClass('open').slideDown(300);
 						$header.addClass('expanded');
+						
+						// Scroll to show the clicked question box properly
+						setTimeout(function() {
+							var container = $('#catechism-content');
+							var containerScrollTop = container.scrollTop();
+							var containerTop = container.offset().top;
+							var questionTop = $thisBox.offset().top;
+							var relativePosition = questionTop - containerTop + containerScrollTop;
+							
+							// Only scroll if the question is not fully visible
+							var containerHeight = container.height();
+							var questionHeight = $thisBox.outerHeight();
+							
+							if (relativePosition < containerScrollTop ||
+								relativePosition + questionHeight > containerScrollTop + containerHeight) {
+								container.animate({
+									scrollTop: Math.max(0, relativePosition - 20)
+								}, 400);
+							}
+						}, 350);
 					}
 				});
 
@@ -718,8 +741,11 @@
 				$catechismContent.html(html).slideDown(300);
 				currentOpen = distinctiveId;
 
-				// Add click handlers for question boxes
-				$('.question-box').on('click', function() {
+				// Add click handlers for question boxes with mobile support
+				$('.question-box').on('click touchstart', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					
 					var $content = $(this).find('.question-content');
 					var $header = $(this).find('.question-header');
 					var $thisBox = $(this);
@@ -733,6 +759,26 @@
 						$('.question-header.expanded').removeClass('expanded');
 						$content.addClass('open').slideDown(300);
 						$header.addClass('expanded');
+						
+						// Scroll to show the clicked question box properly
+						setTimeout(function() {
+							var container = $('#catechism-content');
+							var containerScrollTop = container.scrollTop();
+							var containerTop = container.offset().top;
+							var questionTop = $thisBox.offset().top;
+							var relativePosition = questionTop - containerTop + containerScrollTop;
+							
+							// Only scroll if the question is not fully visible
+							var containerHeight = container.height();
+							var questionHeight = $thisBox.outerHeight();
+							
+							if (relativePosition < containerScrollTop ||
+								relativePosition + questionHeight > containerScrollTop + containerHeight) {
+								container.animate({
+									scrollTop: Math.max(0, relativePosition - 20)
+								}, 400);
+							}
+						}, 350);
 					}
 				});
 
@@ -760,8 +806,11 @@
 				$catechismContent.html(html).slideDown(300);
 				currentOpen = distinctiveId;
 
-				// Add click handlers for question boxes
-				$('.question-box').on('click', function() {
+				// Add click handlers for question boxes with mobile support
+				$('.question-box').on('click touchstart', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					
 					var $content = $(this).find('.question-content');
 					var $header = $(this).find('.question-header');
 					var $thisBox = $(this);
@@ -775,6 +824,26 @@
 						$('.question-header.expanded').removeClass('expanded');
 						$content.addClass('open').slideDown(300);
 						$header.addClass('expanded');
+						
+						// Scroll to show the clicked question box properly
+						setTimeout(function() {
+							var container = $('#catechism-content');
+							var containerScrollTop = container.scrollTop();
+							var containerTop = container.offset().top;
+							var questionTop = $thisBox.offset().top;
+							var relativePosition = questionTop - containerTop + containerScrollTop;
+							
+							// Only scroll if the question is not fully visible
+							var containerHeight = container.height();
+							var questionHeight = $thisBox.outerHeight();
+							
+							if (relativePosition < containerScrollTop ||
+								relativePosition + questionHeight > containerScrollTop + containerHeight) {
+								container.animate({
+									scrollTop: Math.max(0, relativePosition - 20)
+								}, 400);
+							}
+						}, 350);
 					}
 				});
 			} else {
@@ -792,16 +861,41 @@
 				$catechismContent.html(html).slideDown(300);
 				currentOpen = distinctiveId;
 
-				// Add click handler for the single question box
-				$('.question-box').on('click', function() {
+				// Add click handler for the single question box with mobile support
+				$('.question-box').on('click touchstart', function(e) {
+					e.preventDefault();
+					e.stopPropagation();
+					
 					var $content = $(this).find('.question-content');
 					var $header = $(this).find('.question-header');
+					var $thisBox = $(this);
+					
 					if ($content.hasClass('open')) {
 						$content.removeClass('open').slideUp(300);
 						$header.removeClass('expanded');
 					} else {
 						$content.addClass('open').slideDown(300);
 						$header.addClass('expanded');
+						
+						// Scroll to show the clicked question box properly
+						setTimeout(function() {
+							var container = $('#catechism-content');
+							var containerScrollTop = container.scrollTop();
+							var containerTop = container.offset().top;
+							var questionTop = $thisBox.offset().top;
+							var relativePosition = questionTop - containerTop + containerScrollTop;
+							
+							// Only scroll if the question is not fully visible
+							var containerHeight = container.height();
+							var questionHeight = $thisBox.outerHeight();
+							
+							if (relativePosition < containerScrollTop ||
+								relativePosition + questionHeight > containerScrollTop + containerHeight) {
+								container.animate({
+									scrollTop: Math.max(0, relativePosition - 20)
+								}, 400);
+							}
+						}, 350);
 					}
 				});
 			}
