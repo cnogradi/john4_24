@@ -28,6 +28,7 @@
 		$visible_2 = $('#reel'),
 		$carosel_articles = $main_2.children('article');
 
+
 	// Breakpoints.
 		breakpoints({
 			wide:      [ '1281px',  '1680px' ],
@@ -84,7 +85,8 @@
 					visibleClass: 'navPanel-visible'
 				});
 
-	// Carousels.
+					
+			// Carousels.
 		$('.carousel').each(function() {
 
 			var	$t = $(this),
@@ -550,10 +552,7 @@
 					|| location.hash == "#reel") {
 
 						// Prevent default.
-							event.preventDefault();
-							event.stopPropagation();
-
-						// Hide.
+													// Hide.
 							$main._hide();
 							$main_2._hide();
 
@@ -627,5 +626,185 @@
 							$main_2._show(location.hash.substr(1), true);
 						}
 					});
+	// Distinctives.
+	var $distinctives = $('.distinctives a');
+	var $catechismContent = $('#catechism-content');
+	var catechismData = JSON.parse($('#catechism_data').html());
+	var baptistEcclesiologyData = JSON.parse($('#baptist_ecclesiology_data').html());
+	var confessionalData = JSON.parse($('#confessional_data').html());
+	var currentOpen = null;
+
+
+		$distinctives.on('click', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+
+			var distinctiveId = $(this).attr('id');
+			var distinctiveName = $(this).text();
+			var $this = $(this);
+
+			// Remove active class from all distinctives and add to clicked one
+			$distinctives.removeClass('active');
+			$this.addClass('active');
+
+			// Close other sections
+			if (currentOpen && currentOpen !== distinctiveId) {
+				$catechismContent.slideUp(300);
+			}
+
+			if (distinctiveId === 'regulative-link') {
+				var html = '<div class="distinctive-section">';
+				// Remove the title heading as requested
+				// html += '<h3>' + catechismData.title + '</h3>';
+				
+				$.each(catechismData.questions, function(i, item) {
+					html += '<div class="question-box" data-question="' + i + '">';
+					html += '<div class="question-header">' + item.question + '</div>';
+					html += '<div class="question-content">';
+					$.each(item.verses, function(j, verse) {
+						html += '<div class="verse">';
+						html += '<a href="' + verse.link + '" target="_blank">' + verse.reference + '</a>: ';
+						html += verse.text;
+						html += '</div>';
+					});
+					html += '</div>';
+					html += '</div>';
+				});
+
+				html += '</div>';
+				
+				$catechismContent.html(html).slideDown(300);
+				currentOpen = distinctiveId;
+
+				// Add click handlers for question boxes
+				$('.question-box').on('click', function() {
+					var $content = $(this).find('.question-content');
+					var $header = $(this).find('.question-header');
+					var $thisBox = $(this);
 					
+					if ($content.hasClass('open')) {
+						$content.removeClass('open').slideUp(300);
+						$header.removeClass('expanded');
+					} else {
+						// Close other open questions
+						$('.question-content.open').removeClass('open').slideUp(300);
+						$('.question-header.expanded').removeClass('expanded');
+						$content.addClass('open').slideDown(300);
+						$header.addClass('expanded');
+					}
+				});
+
+			} else if (distinctiveId === 'baptist-ecclesiology-link') {
+				var html = '<div class="distinctive-section">';
+				// Remove the title heading as requested
+				// html += '<h3>' + baptistEcclesiologyData.title + '</h3>';
+				
+				$.each(baptistEcclesiologyData.questions, function(i, item) {
+					html += '<div class="question-box" data-question="' + i + '">';
+					html += '<div class="question-header">' + item.question + '</div>';
+					html += '<div class="question-content">';
+					$.each(item.verses, function(j, verse) {
+						html += '<div class="verse">';
+						html += '<a href="' + verse.link + '" target="_blank">' + verse.reference + '</a>: ';
+						html += verse.text;
+						html += '</div>';
+					});
+					html += '</div>';
+					html += '</div>';
+				});
+
+				html += '</div>';
+				
+				$catechismContent.html(html).slideDown(300);
+				currentOpen = distinctiveId;
+
+				// Add click handlers for question boxes
+				$('.question-box').on('click', function() {
+					var $content = $(this).find('.question-content');
+					var $header = $(this).find('.question-header');
+					var $thisBox = $(this);
+					
+					if ($content.hasClass('open')) {
+						$content.removeClass('open').slideUp(300);
+						$header.removeClass('expanded');
+					} else {
+						// Close other open questions
+						$('.question-content.open').removeClass('open').slideUp(300);
+						$('.question-header.expanded').removeClass('expanded');
+						$content.addClass('open').slideDown(300);
+						$header.addClass('expanded');
+					}
+				});
+
+			} else if (distinctiveId === 'confessional-link') {
+				var html = '<div class="distinctive-section">';
+				// Remove the title heading as requested
+				// html += '<h3>' + confessionalData.title + '</h3>';
+				
+				$.each(confessionalData.questions, function(i, item) {
+					html += '<div class="question-box" data-question="' + i + '">';
+					html += '<div class="question-header">' + item.question + '</div>';
+					html += '<div class="question-content">';
+					$.each(item.verses, function(j, verse) {
+						html += '<div class="verse">';
+						html += '<a href="' + verse.link + '" target="_blank">' + verse.reference + '</a>: ';
+						html += verse.text;
+						html += '</div>';
+					});
+					html += '</div>';
+					html += '</div>';
+				});
+
+				html += '</div>';
+				
+				$catechismContent.html(html).slideDown(300);
+				currentOpen = distinctiveId;
+
+				// Add click handlers for question boxes
+				$('.question-box').on('click', function() {
+					var $content = $(this).find('.question-content');
+					var $header = $(this).find('.question-header');
+					var $thisBox = $(this);
+					
+					if ($content.hasClass('open')) {
+						$content.removeClass('open').slideUp(300);
+						$header.removeClass('expanded');
+					} else {
+						// Close other open questions
+						$('.question-content.open').removeClass('open').slideUp(300);
+						$('.question-header.expanded').removeClass('expanded');
+						$content.addClass('open').slideDown(300);
+						$header.addClass('expanded');
+					}
+				});
+			} else {
+				var html = '<div class="distinctive-section">';
+				// Remove the title heading as requested
+				// html += '<h3>' + distinctiveName + '</h3>';
+				html += '<div class="question-box">';
+				html += '<div class="question-header">Information Coming Soon</div>';
+				html += '<div class="question-content">';
+				html += '<p>This section is currently under development. Please check back later for detailed information about ' + distinctiveName + '.</p>';
+				html += '</div>';
+				html += '</div>';
+				html += '</div>';
+				
+				$catechismContent.html(html).slideDown(300);
+				currentOpen = distinctiveId;
+
+				// Add click handler for the single question box
+				$('.question-box').on('click', function() {
+					var $content = $(this).find('.question-content');
+					var $header = $(this).find('.question-header');
+					if ($content.hasClass('open')) {
+						$content.removeClass('open').slideUp(300);
+						$header.removeClass('expanded');
+					} else {
+						$content.addClass('open').slideDown(300);
+						$header.addClass('expanded');
+					}
+				});
+			}
+		});
+
 })(jQuery);
